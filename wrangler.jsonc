@@ -10,15 +10,15 @@
     "d1_databases": [
         {
           "binding": "DB",
-          "database_name": "testing",
-          "database_id": "a97f776c-ec41-47e5-ab12-6309ae47d566"
+          "database_name": "<YOUR-DATABASE-NAME>",
+          "database_id": "<YOUR-DATABASE-ID>"
         }
     ],
     "secrets_store_secrets": [
         {
-            "store_id": "1969478d7a0a430c97e57fe9eae97d57",
+            "store_id": "<YOUR-STORE-ID>",
             "binding": "SECRET",
-        "secret_name": "D1Auth"
+            "secret_name": "<YOUR-SECRET-NAME>"
         }
     ],
 	"observability": {
