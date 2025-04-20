@@ -137,11 +137,32 @@ Content-Type: application/json
 ### Successful Response
 ```json
 {
+    "success": true,
+    "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "ENAM",
+        "served_by_primary": true,
+        "timings": {
+            "sql_duration_ms": 0.1746
+        },
+        "duration": 0.1746,
+        "changes": 0,
+        "last_row_id": 0,
+        "changed_db": false,
+        "size_after": 28672,
+        "rows_read": 2,
+        "rows_written": 0
+    },
     "results": [
         {
-            "id": 1,
-            "name": "John Doe",
-            "age": 30
+            "user_id": 1,
+            "name": "Alice",
+            "email": "alice@example.com"
+        },
+        {
+            "user_id": 2,
+            "name": "Bob",
+            "email": "bob@example.com"
         }
     ]
 }
@@ -150,9 +171,15 @@ Content-Type: application/json
 ### Error Response
 ```json
 {
+    "success": false,
     "error": "Error message here"
 }
 ```
+
+The response includes:
+- `success`: Boolean indicating if the request was successful
+- `meta`: Execution metadata including timing and database statistics
+- `results`: Array of returned records (for GET requests)
 
 ## Security Notes
 - All column names and table names are sanitized to prevent SQL injection
