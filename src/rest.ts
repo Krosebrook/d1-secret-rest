@@ -9,10 +9,17 @@ function sanitizeIdentifier(identifier: string): string {
 }
 
 /**
+ * Processing when the table name is a keyword in SQLite.
+ */
+function sanitizeKeyword(identifier: string): string {
+    return '`'+sanitizeIdentifier(identifier)+'`';
+}
+
+/**
  * Handles GET requests to fetch records from a table
  */
 async function handleGet(c: Context<{ Bindings: Env }>, tableName: string, id?: string): Promise<Response> {
-    const table = sanitizeIdentifier(tableName);
+    const table = sanitizeKeyword(tableName);
     const searchParams = new URL(c.req.url).searchParams;
     
     try {
@@ -74,7 +81,7 @@ async function handleGet(c: Context<{ Bindings: Env }>, tableName: string, id?: 
  * Handles POST requests to create new records
  */
 async function handlePost(c: Context<{ Bindings: Env }>, tableName: string): Promise<Response> {
-    const table = sanitizeIdentifier(tableName);
+    const table = sanitizeKeyword(tableName);
     const data = await c.req.json();
 
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
@@ -101,7 +108,7 @@ async function handlePost(c: Context<{ Bindings: Env }>, tableName: string): Pro
  * Handles PUT/PATCH requests to update records
  */
 async function handleUpdate(c: Context<{ Bindings: Env }>, tableName: string, id: string): Promise<Response> {
-    const table = sanitizeIdentifier(tableName);
+    const table = sanitizeKeyword(tableName);
     const data = await c.req.json();
 
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
@@ -131,7 +138,7 @@ async function handleUpdate(c: Context<{ Bindings: Env }>, tableName: string, id
  * Handles DELETE requests to remove records
  */
 async function handleDelete(c: Context<{ Bindings: Env }>, tableName: string, id: string): Promise<Response> {
-    const table = sanitizeIdentifier(tableName);
+    const table = sanitizeKeyword(tableName);
 
     try {
         const query = `DELETE FROM ${table} WHERE id = ?`;
